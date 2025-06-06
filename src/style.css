@@ -11,11 +11,13 @@
   --dk: #202020;
   --md: #393939;
 }
+
 body {
   background: radial-gradient(259.61% 136.19% at 1.39% 0%, #7BABDD 0%, #E0F1FF 100%);
   height: 100dvh;
   padding: 24px;
 }
+
 h1 {
   font-family: 'campton', sans-serif;
   font-weight: 600;
