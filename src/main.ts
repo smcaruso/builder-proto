@@ -1,5 +1,7 @@
 import "./style.css"
 import "./fonts.css"
 
-import { registerButtons } from "./components/buttons.ts";
-registerButtons()
+import { defineButtons } from "./components/buttons.ts"
+import { defineNav } from "./components/header.ts"
+defineButtons()
+defineNav()
