@@ -51,7 +51,7 @@ export const css = `
   }
 
   button.magic:before {
-    content: ".";
+    content: " ";
     width: 110%;
     height: 110%;
     position: absolute;
@@ -64,7 +64,7 @@ export const css = `
   }
 
   button.magic:after {
-    content: ".";
+    content: " ";
     width: 100%;
     height: 100%;
     position: absolute;

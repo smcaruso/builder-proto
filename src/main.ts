@@ -1,7 +1,9 @@
 import "./style.css"
 import "./fonts.css"
-
 import { defineButtons } from "./components/buttons.ts"
-import { defineNav } from "./components/header.ts"
+import { NavBar } from "./components/header.ts"
+import { PrototypeScript } from "./protoScript.ts"
+
 defineButtons()
-defineNav()
+new NavBar()
+new PrototypeScript()

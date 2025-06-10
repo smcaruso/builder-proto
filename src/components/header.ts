@@ -1,51 +1,121 @@
-const css = `
-  nav {
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 11px;
-    gap: 10px;
+export class NavBar {
 
-    width: 100%;
-    height: 48px;
+  breadcrumbs: string[] = ["New Project"]
+  editable: boolean = false
+  private crumbsElement: HTMLDivElement = document.createElement("div")
 
-    background: linear-gradient(90.06deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.5) 21.22%, rgba(255, 255, 255, 0.75) 100.31%);
-    box-shadow: 0px 4px 36px rgba(0, 0, 0, 0.25), inset 0px 1px 2px #FFFFFF, inset 0px -1px 2px rgba(0, 0, 0, 0.25);
-    backdrop-filter: blur(32px);
-    /* Note: backdrop-filter has minimal browser support */
-    border-radius: 12px;
+  /*
+
+  NavBar Structure:
+
+  nav.nav-header
+   -> div.left-nav-group
+    -> div.logo
+      -> img.logo-icon
+      -> span.studio-title
+    -> div.crumbsElement
+      -> div.crumb
+      -> div.crumb-divider
+      -> div.crumb
+      -> ... updated to match breadcrumbs array
+      -> img.editable-icon
+   -> div.right-nav-group
+    -> div.project-settings
+      -> img.project-settings-icon
+      -> span.label
+    -> div.manage-content
+      -> img.manage-content-icon
+      -> span.label
+    -> div.account
+    -> span.label
+      -> img.account-icon
+  */
+
+  constructor() {
+    const nav = document.getElementById("nav")
+    if (!nav) return
+
+    nav.className = "nav-header"
+
+    const leftGroup = document.createElement("div")
+    leftGroup.className = "left-nav-group"
+
+    const logo = document.createElement("div")
+    logo.className = "logo"
+    const logoImg = document.createElement("img")
+    logoImg.className = "logo-icon"
+    logoImg.src="/ui/napster-logo.svg"
+    const logoTitle = document.createElement("span")
+    logoTitle.className = "studio-title"
+    logoTitle.textContent = "Napster 3D Studio"
+    logo.append(logoImg, logoTitle)
+
+    // this.crumbsElement = 
+    this.crumbsElement.className = "crumbsElement"
+    
+    leftGroup.append(logo, this.crumbsElement)
+    this.renderBreadcrumbs()
+
+    const rightGroup = document.createElement("div")
+    rightGroup.className = "right-nav-group"
+
+    const projectSettings = document.createElement("div")
+
+    projectSettings.className = "right-nav-item"
+    const projImg = document.createElement("img")
+    projImg.className = "project-settings-icon"
+    projImg.src = "/ui/icon-settings.svg"
+    const projLabel = document.createElement("span")
+    projLabel.className = "label"
+    projLabel.textContent = "Project Settings"
+    projectSettings.append(projImg, projLabel)
+
+    const manageContent = document.createElement("div")
+
+    manageContent.className = "right-nav-item"
+    const manageImg = document.createElement("img")
+    manageImg.className = "manage-content-icon"
+    manageImg.src = "/ui/icon-content.svg"
+    const manageLabel = document.createElement("span")
+    manageLabel.className = "label"
+    manageLabel.textContent = "Content"
+    manageContent.append(manageImg, manageLabel)
+
+    const account = document.createElement("div")
+    account.className = "right-nav-item"
+    const accountIcon = document.createElement("img")
+    accountIcon.className = "account-icon"
+    accountIcon.src = "/ui/account.png"
+    const accountLabel = document.createElement("span")
+    accountLabel.className = "label"
+    accountLabel.textContent = "Welcome, Steve"
+    account.append(accountLabel, accountIcon)
+
+    rightGroup.append(projectSettings, manageContent, account)
+
+    nav.append(leftGroup, rightGroup)
   }
 
-  nav .left-nav-group {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 0 8px;
-    gap: 10px;
-  }
-  `
+  renderBreadcrumbs() {
+    this.crumbsElement.innerHTML = ""
 
-export function defineNav() {
-  customElements.define("nav-header", class extends HTMLElement {
-    constructor() {
-      super()
-      const shadow = this.attachShadow({ mode: "open" })
-      const style = document.createElement("style")
-      style.textContent = css
-      shadow.appendChild(style)
-      shadow.innerHTML += `
-        <nav class="nav-header">
-          <div class="left-nav-group">
-          <div class="logo">
-            <img src="/ui/napster-logo.svg" alt="Logo">
-            <span>Napster 3D Studio</span>
-          </div>
-        </nav>
-      `
-      shadow.appendChild(navbar)
+    this.breadcrumbs.forEach((crumb) => {
+      const divider = document.createElement("div")
+      divider.className = "crumb-divider"
+      divider.textContent = "/"
+      this.crumbsElement.appendChild(divider)
+
+      const crumbDiv = document.createElement("div")
+      crumbDiv.className = "crumb"
+      crumbDiv.textContent = crumb
+      this.crumbsElement.appendChild(crumbDiv)
+    })
+
+    if (this.editable) {
+      const editIcon = document.createElement("img")
+      editIcon.className = "editable-icon"
+      this.crumbsElement.appendChild(editIcon)
     }
-  })
+  }
+
 }
