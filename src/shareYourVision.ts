@@ -317,7 +317,7 @@ export class ShareYourVision {
       ease: "out",
       onComplete: () => {
         shopifyOverlay.innerHTML = `<img src="/ui/shopify.png" alt="click to dismiss shopify dialog">`
-        shopifyOverlay.addEventListener("click", )
+        // shopifyOverlay.addEventListener("click", )
       }
     })
 
