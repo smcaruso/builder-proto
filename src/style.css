@@ -28,6 +28,7 @@ body {
   background-blend-mode: screen;
   margin: 0;
   padding: 0.75rem;
+  overflow: hidden;
 }
 
 footer {
@@ -153,6 +154,7 @@ main.share-your-vision {
   gap: 24px;
   flex-grow: 1;
   color: var(--lt);
+  overflow: none;
 }
 
 main.share-your-vision.intro {
@@ -255,10 +257,21 @@ main.share-your-vision .theme-picker {
   align-items: start;
   justify-content: center;
   flex-grow: 0;
-  height: calc(100% - 4rem);
+  flex-shrink: 1;
+  height: calc(100dvh - 4rem);
   max-width: 400px;
   padding-left: 96px;
   transform: translateX(-96px);
+  gap: 1rem;
+
+}
+
+main.share-your-vision .theme-picker .theme-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 28rem;
 }
 
 main.share-your-vision .operator-chat .message-history {
