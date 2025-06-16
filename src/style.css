@@ -19,16 +19,25 @@ body {
   height: calc(100dvh - 1.5rem);
   background-color: #0a0a0a; /* fallback */
   background-image:
-    radial-gradient(circle at center, rgba(0,0,0,0.8) 0%, transparent 50%),
-    radial-gradient(circle at top left, rgba(110,0,160,0.4), transparent 70%),
-    radial-gradient(circle at bottom right, rgba(0,60,150,0.4), transparent 70%);
+    radial-gradient(circle at center, rgba(0,0,0,0.6) 0%, transparent 80%),
+    radial-gradient(circle at top left, rgba(110,0,160,0.6), transparent 70%),
+    radial-gradient(circle at bottom right, rgba(0,60,150,0.6), transparent 70%);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  background-blend-mode: screen;
+  background-blend-mode: normal, screen, screen;
   margin: 0;
   padding: 0.75rem;
   overflow: hidden;
+}
+
+.three {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
 
 footer {
@@ -37,7 +46,9 @@ footer {
   width: calc(100% - 2rem);
   font-size: 0.5rem;
   border-top: 0.5px solid gray;
+  color: gray;
   padding-top: 0.5rem;
+  mix-blend-mode:luminosity;
 }
 
 h1 {
@@ -117,6 +128,20 @@ nav .left-nav-group {
   justify-content: start;
   gap: 0.5rem;
 }
+.left-nav-group .crumbsElement .crumb {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+.left-nav-group .crumbsElement .crumb.editable:after {
+  display: block;
+  content: ".";
+  width: 12px;
+  height: 12px;
+  background-image: url("/ui/icon-edit.svg");
+}
 
 .right-nav-group {
   display: flex;
@@ -136,7 +161,8 @@ nav .left-nav-group {
   /* font-weight: 300; */
 }
 
-.right-nav-group .right-nav-item:hover {
+.right-nav-group .right-nav-item:hover,
+.crumb:hover {
   filter: brightness(2);
   text-decoration: underline;
   cursor: pointer;

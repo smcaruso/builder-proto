@@ -1,7 +1,7 @@
 export class NavBar {
 
   breadcrumbs: string[] = ["New Project"]
-  editable: boolean = false
+
   private crumbsElement: HTMLDivElement = document.createElement("div")
 
   /*
@@ -35,7 +35,7 @@ export class NavBar {
     const nav = document.getElementById("nav")
     if (!nav) return
 
-    nav.className = "nav-header"
+    nav.classList.add("nav-header")
 
     const leftGroup = document.createElement("div")
     leftGroup.className = "left-nav-group"
@@ -106,16 +106,12 @@ export class NavBar {
       this.crumbsElement.appendChild(divider)
 
       const crumbDiv = document.createElement("div")
-      crumbDiv.className = "crumb"
+      crumbDiv.classList.add("crumb")
+      crumbDiv.id = "project-name"
       crumbDiv.textContent = crumb
       this.crumbsElement.appendChild(crumbDiv)
     })
 
-    if (this.editable) {
-      const editIcon = document.createElement("img")
-      editIcon.className = "editable-icon"
-      this.crumbsElement.appendChild(editIcon)
-    }
   }
 
 }

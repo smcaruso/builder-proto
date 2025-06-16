@@ -308,6 +308,10 @@ export class ShareYourVision {
     operatorMessage.style.opacity = "0"
     operatorMessage.style.transform = "translateY(0.5rem)"
 
+    const crumb = document.querySelector(".crumb#project-name") as HTMLDivElement
+    crumb.textContent = "Motherboard Metropolis"
+    crumb.classList.add("editable")
+
     // Animate in operatorMessage
     this.animateIn(operatorMessage, 0.25)
     // After operatorMessage animates in, animate connectShopifyButton
