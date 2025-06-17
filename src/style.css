@@ -273,6 +273,15 @@ main.share-your-vision .operator-chat .chat-box button {
   text-decoration: underline;
 }
 
+main.share-your-vision .operator-chat .chat-box textarea::placeholder {
+  color: #bbbbbb;
+  transition: color 0.25s ease-out;
+}
+
+main.share-your-vision .operator-chat .chat-box textarea.hovered::placeholder {
+  color: #ff6daf;
+}
+
 main.share-your-vision .operator-chat .chat-box textarea {
   resize: none;
   overflow: hidden;

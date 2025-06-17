@@ -1,7 +1,10 @@
 import gsap from "gsap"
+import { Viewport } from "./viewport"
 
 export class ShareYourVision {
   
+  viewport?: Viewport
+
   state: number = 0
   messages: string[] = []
 
@@ -82,6 +85,8 @@ export class ShareYourVision {
   }
 
   removeIntroChat() {
+
+    this.viewport?.zoomOut()
     
     gsap.to(this.introChat, {
       opacity: 0,

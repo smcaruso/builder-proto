@@ -14,5 +14,5 @@ import { Viewport } from "./viewport.ts"
 
 defineButtons()
 new NavBar()
-new ShareYourVision()
-new Viewport()
+const shareYourVision = new ShareYourVision()
+shareYourVision.viewport = new Viewport()
