@@ -570,7 +570,7 @@ export class ShareYourVision {
     })
 
     const thumbs = themeConfirm.querySelectorAll("img")
-    thumbs.forEach((img, index) => {
+    thumbs.forEach((img) => {
       img.addEventListener("click", () => {
         img.classList.toggle("embiggened")
       })
