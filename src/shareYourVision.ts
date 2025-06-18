@@ -572,7 +572,7 @@ export class ShareYourVision {
     const thumbs = themeConfirm.querySelectorAll("img")
     thumbs.forEach((img, index) => {
       img.addEventListener("click", () => {
-        console.log(`Clicked thumbnail ${index + 1}`)
+        img.classList.toggle("embiggened")
       })
     })
 
@@ -608,25 +608,82 @@ export class ShareYourVision {
           }
         })
       })
+
       setTimeout(() => {
         themeConfirm.append(magicButtonClone, operatorMessage)
         this.animateIn(magicButtonClone)
-        this.animateIn(operatorMessage, 0.5)
-      }, 250)
+        gsap.to(operatorMessage, {
+          opacity: 1,
+          transform: "unset",
+          duration: 0.5,
+          ease: "out",
+          onComplete: () => {
+            setTimeout(() => {
+              gsap.to(magicButtonClone, { opacity: 0, duration: 0.5, ease: "out" })
+              operatorMessage.innerHTML = `
+                <div class="message-header">
+                <img src="/ui/operator.svg" width="24px" height="24px" alt="Operation Icon" style="filter: brightness(0) invert(1);">
+                <span class="big-title">Build with Magic Layout</span>
+                </div>
+                <div class="divider" style="width:100%; border-bottom: 0.5px solid white;"> </div>
+              `
+              const newOpMsg: string[] = [
+                "Sorted 16 products into 5 Sets",
+                "Configured initial store size",
+                "Applied Guava Boutique theme"
+              ]
 
-      // gsap.to(this.main, {
-      //   opacity: 0,
-      //   duration: 0.5,
-      //   ease: "out",
-      //   onComplete: () => {
-      //     this.main.remove()
-      //     gsap.to(document.body, {
-      //       backgroundImage: "radial-gradient(97.08% 240.77% at 1.39% 0%, #7BABDD 0%, #E0F1FF 100%)",
-      //       duration: 1,
-      //       ease: "out"
-      //     })
-      //   }
-      // })
+              newOpMsg.forEach( (msg, index) => {
+                const opMsg = document.createElement("div")
+                opMsg.className = "message-header"
+                opMsg.style.opacity = "0"
+                opMsg.innerHTML = `
+                  <img src="/ui/icon-check.svg" width="24px" height="24px" alt="Operation Icon" style="filter: brightness(0) invert(1);">
+                  <span class="headline">${msg}</span>
+                `
+                operatorMessage.append(opMsg)
+                if (index === 2) {
+                  const divider = document.createElement("div")
+                  divider.classList.add("divider")
+                  divider.style.width = "100%"
+                  divider.style.borderBottom = "0.5px solid white"
+                  divider.style.opacity = "0"
+                  operatorMessage.append(divider)
+                  gsap.to(divider, {opacity: 1, duration: 0.5, delay: 1.5, onComplete: () => {
+                    const finalMessage = document.createElement("p")
+                    finalMessage.innerHTML = `Your new store, <strong>Motherboard Metropolis</strong>, is ready to move in.`
+                    const continueButton = document.createElement("regular-button")
+                    continueButton.innerText = "Continue"
+                    finalMessage.style.opacity = "0"
+                    continueButton.style.opacity = "0"
+                    continueButton.style.transform = "translateY(0.5rem)"
+                    operatorMessage.append(finalMessage, continueButton)
+                    this.animateIn(finalMessage, 0.25)
+                    this.animateIn(continueButton, 0.75)
+                    continueButton.addEventListener("click", () => {
+                      gsap.to(this.main, {
+                        opacity: 0,
+                        duration: 0.5,
+                        ease: "out",
+                        onComplete: () => {
+                          this.main.remove()
+                          gsap.to(document.body, {
+                            backgroundImage: "radial-gradient(97.08% 240.77% at 1.39% 0%, #7BABDD 0%, #E0F1FF 100%)",
+                            duration: 1,
+                            ease: "out"
+                          })
+                        }
+                      })
+                    })
+                  }})
+                }
+                this.animateIn(opMsg, 0.5 * (index + 1))
+              })
+
+            }, 2000)
+          }
+        })
+      }, 250)
 
     })
 

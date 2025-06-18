@@ -338,6 +338,10 @@ main.share-your-vision .theme-confirm .message {
   gap: 20px;
   overflow: visible;
 }
+main.share-your-vision .theme-confirm .message {
+  max-width: 75%;
+  padding-top: 1.5rem;
+}
 
 main.share-your-vision .operator-chat .message-history .message.user {
   background: rgba(255, 255, 255, 0.01);
@@ -465,7 +469,7 @@ main.share-your-vision .theme-confirm {
   flex-grow: 2;
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: stretch;
   justify-content: center;
   height: calc(100% - 4rem);
   padding: 0;
@@ -497,12 +501,27 @@ main.share-your-vision .theme-confirm .thumb-row {
 }
 
 main.share-your-vision .theme-confirm .thumb-row img {
+  height: 68px;
+  width: auto;
   border-radius: 4px;
   box-shadow: 4px 4px 12px #00000033;
-  transition: all 0.25s;
+  transition: all 0.5s;
+  position: relative;
 }
 
-main.share-your-vision .theme-confirm .thumb-row img:hover {
+main.share-your-vision .theme-confirm .thumb-row img.embiggened {
+  position: absolute;
+  top: 18dvh;
+  left: -10dvw;
+  border-radius: 2px;
+  width: 50dvw;
+  height: auto;
+  transform: rotateZ(-1deg);
+  box-shadow: 8px 8px 32px #000000cc;
+  z-index: 100;
+}
+
+main.share-your-vision .theme-confirm .thumb-row img:not(.embiggened):hover {
   transform: scale(1.1) rotateZ(-2deg);
 }
 
@@ -526,4 +545,11 @@ main.share-your-vision .theme-confirm.transitioning p {
   transform: scaleY(0);
   /* height: 0; */
   transition: all 0.5s ease-out;
+}
+
+main.share-your-vision .theme-confirm .message-header span.big-title {
+  font-family: campton, sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  flex-grow: 1;
 }
