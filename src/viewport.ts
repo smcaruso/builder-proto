@@ -35,6 +35,7 @@ export class Viewport {
     "a travel essentials kiosk at an airport terminal",
     "a futuristic showroom for modular furniture"
   ]
+  private enableHoverEffects = true
 
   constructor() {
 
@@ -62,8 +63,11 @@ export class Viewport {
     this.animate = this.animate.bind(this)
     this.animate()
 
-    window.addEventListener('mousemove', this.onMouseMove.bind(this))
-    window.addEventListener('click', this.onClick.bind(this))
+    this.onMouseMove = this.onMouseMove.bind(this)
+    this.onClick = this.onClick.bind(this)
+
+    window.addEventListener('mousemove', this.onMouseMove)
+    window.addEventListener('click', this.onClick)
   }
 
   private createTestCubes() {
@@ -118,15 +122,14 @@ export class Viewport {
         model.position.set(x, y, ((Math.random() - 1.0) * 60) + 1)
         this.testObjects.push({
           model,
-          speed: (Math.random() > 0.5 ? 1 : -1) * (0.001 + Math.random() * 0.005)
+          speed: (Math.random() > 0.5 ? 1 : -1) * (0.002 + Math.random() * 0.01)
         })
         this.scene.add(model)
       }
     })
   }
 
-  private animate() {
-    // Raycasting logic for hover effect
+  private handleHoverEffects() {
     this.raycaster.setFromCamera(this.mouse, this.camera)
     const intersects = this.raycaster.intersectObjects(this.testObjects.map(obj => obj.model), true)
 
@@ -162,16 +165,27 @@ export class Viewport {
         })
       }
     }
+  }
+
+  private animate() {
+    if (this.enableHoverEffects) {
+      this.handleHoverEffects()
+    }
 
     requestAnimationFrame(this.animate)
     this.controls.update()
-    for (const obj of this.testObjects) {
-      obj.model.position.z += obj.speed
+    if (this.testObjects.length > 0) {
+      for (const obj of this.testObjects) {
+        obj.model.position.z += obj.speed
+      }
     }
     this.renderer.render(this.scene, this.camera)
   }
 
   private onMouseMove(event: MouseEvent) {
+    const target = event.target as HTMLElement
+    if (target?.classList.contains("chat-box")) return
+
     const rect = this.renderer.domElement.getBoundingClientRect()
     this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1
     this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1
@@ -186,6 +200,33 @@ export class Viewport {
   }
 
   zoomOut() {
-    gsap.to(this.camera.position, { z: 500, duration: 10, ease: "out" })
+    gsap.to(this.camera.position, { z: 500, duration: 4, ease: "in-out", onComplete: this.dispose.bind(this)})
   }
+
+  public dispose() {
+    for (const obj of this.testObjects) {
+      this.scene.remove(obj.model)
+      obj.model.traverse(child => {
+        if ((child as THREE.Mesh).isMesh) {
+          const mesh = child as THREE.Mesh
+          this.scene.remove(mesh)
+          mesh.geometry.dispose()
+          if (Array.isArray(mesh.material)) {
+            mesh.material.forEach(m => m.dispose())
+          } else {
+            mesh.material.dispose()
+          }
+        }
+      })
+    }
+    
+    this.testObjects = []
+
+    // Cancel animation fallback
+    this.animate = () => {}
+
+    window.removeEventListener('mousemove', this.onMouseMove)
+    window.removeEventListener('click', this.onClick)
+  }
+
 }

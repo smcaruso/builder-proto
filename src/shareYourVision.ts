@@ -67,8 +67,8 @@ export class ShareYourVision {
     textArea.addEventListener('input', () => {
 
       textArea.value = "I want to build a virtual electronics store where people can browse and compare different products"
-      textArea.style.height = 'auto' // reset to recalc
-      textArea.style.height = textArea.scrollHeight + 'px'
+      // textArea.style.height = 'auto' // reset to recalc
+      // textArea.style.height = textArea.scrollHeight + 'px'
       textInputTried = true
     })
 
@@ -276,8 +276,8 @@ export class ShareYourVision {
 
     const onInput = () => {
       this.operatorChatInput.value = "yeah, it's motherboard-metropolis.shopify.com"
-      this.operatorChatInput.style.height = 'auto' // reset to recalc
-      this.operatorChatInput.style.height = this.operatorChatInput.scrollHeight + 'px'
+      // this.operatorChatInput.style.height = 'auto' // reset to recalc
+      // this.operatorChatInput.style.height = this.operatorChatInput.scrollHeight + 'px'
       this.operatorChatSendButton.addEventListener('click', onSend)
     }
 
@@ -578,22 +578,56 @@ export class ShareYourVision {
 
     const magicButton = themeConfirm.querySelector("#magic-layout") as HTMLButtonElement
     const backButton = themeConfirm.querySelector("#back-to-themes") as HTMLButtonElement
+    
+    const magicButtonClone = magicButton.cloneNode(true) as HTMLButtonElement
+    magicButtonClone.style.opacity = "0"
+    magicButtonClone.style.transform = "translateY(0.5rem)"
 
     magicButton.addEventListener("click", () => {
-      gsap.to(this.main, {
-        opacity: 0,
-        duration: 0.5,
-        ease: "out",
-        onComplete: () => {
-          this.main.remove()
-          gsap.to(document.body, {
-            backgroundImage: "radial-gradient(97.08% 240.77% at 1.39% 0%, #7BABDD 0%, #E0F1FF 100%)",
-            duration: 1,
-            ease: "out"
-          })
-        }
+
+      const operatorMessage = document.createElement("div")
+      operatorMessage.className = "message operator reasoning"
+      operatorMessage.innerHTML = `
+        <div class="message-header">
+          <img src="/ui/operator.svg" alt="Operator Icon" style="filter: brightness(0) invert(1);">
+          <span class="headline">Preparing to build...</span>
+          <span class="action">Stop</span>
+        </div>
+        <div class="progress-bar"></div>
+      `
+      operatorMessage.style.opacity = "0"
+      operatorMessage.style.transform = "translateY(0.5rem)"
+      
+      themeConfirm.childNodes.forEach( node => {
+        gsap.to(node, {
+          opacity: 0,
+          transform: "translateY(2rem)",
+          duration: 0.25,
+          onComplete: () => {
+            node.remove()
+          }
+        })
       })
-      // document.body.style.backgroundImage = "radial-gradient(97.08% 240.77% at 1.39% 0%, #7BABDD 0%, #E0F1FF 100%)"
+      setTimeout(() => {
+        themeConfirm.append(magicButtonClone, operatorMessage)
+        this.animateIn(magicButtonClone)
+        this.animateIn(operatorMessage, 0.5)
+      }, 250)
+
+      // gsap.to(this.main, {
+      //   opacity: 0,
+      //   duration: 0.5,
+      //   ease: "out",
+      //   onComplete: () => {
+      //     this.main.remove()
+      //     gsap.to(document.body, {
+      //       backgroundImage: "radial-gradient(97.08% 240.77% at 1.39% 0%, #7BABDD 0%, #E0F1FF 100%)",
+      //       duration: 1,
+      //       ease: "out"
+      //     })
+      //   }
+      // })
+
     })
 
     backButton.addEventListener("click", () => {
