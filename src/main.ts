@@ -4,15 +4,12 @@ import { defineButtons } from "./components/buttons.ts"
 import { NavBar } from "./components/header.ts"
 import { ShareYourVision } from "./shareYourVision.ts"
 import { Viewport } from "./viewport.ts"
-// import gsap from "gsap"
-
-// window.addEventListener("keydown", (event) => {
-//   if (event.key === "ArrowRight") {
-//     gsap.globalTimeline.getChildren(true, true, true).forEach(tween => tween.progress(1))
-//   }
-// })
+import { Operator } from "./operator.ts"
 
 defineButtons()
-new NavBar()
-const shareYourVision = new ShareYourVision()
-shareYourVision.viewport = new Viewport()
+const navBar = new NavBar()
+const viewport = new Viewport()
+// const shareYourVision = new ShareYourVision(viewport)
+const operator = new Operator(viewport)
+
+console.log(navBar, viewport, operator)

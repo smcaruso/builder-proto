@@ -8,7 +8,7 @@ export class ShareYourVision {
   state: number = 0
   messages: string[] = []
 
-  main: HTMLElement = document.querySelector("main") as HTMLElement
+  main: HTMLElement = document.createElement("main")
   introChat: HTMLDivElement = document.createElement("div")
   themePicker: HTMLDivElement = document.createElement("div")
   themeOptions: HTMLDivElement[] = []
@@ -19,7 +19,14 @@ export class ShareYourVision {
   operatorChatSendButton: HTMLButtonElement = document.createElement("button")
   themeIndex: number = 3
 
-  constructor() {
+  constructor(viewport: Viewport) {
+    this.viewport = viewport
+    const nav = document.querySelector("nav")
+    const footer = document.querySelector("footer")
+    this.main.classList.add("share-your-vision", "intro")
+    if (nav && footer && nav.parentNode) {
+      nav.parentNode.insertBefore(this.main, footer)
+    }
     this.connectIntroChat()
   }
 
@@ -45,6 +52,8 @@ export class ShareYourVision {
     textArea.id = "chat-box"
     textArea.placeholder = "Type, enter a URL, or upload a file."
     textArea.rows = 1
+
+    this.viewport?.connectTextArea(textArea)
 
     const browseButton = document.createElement("button")
     browseButton.type = "button"
@@ -599,6 +608,7 @@ export class ShareYourVision {
       operatorMessage.style.transform = "translateY(0.5rem)"
       
       themeConfirm.childNodes.forEach( node => {
+        if (node.nodeType === Node.TEXT_NODE) return 
         gsap.to(node, {
           opacity: 0,
           transform: "translateY(2rem)",
@@ -744,8 +754,7 @@ export class ShareYourVision {
     newOption.innerHTML = `<img src="/ui/${filename}" alt="Theme ${this.themeIndex + 1}">`
     newOption.style.opacity = "0.5"
     this.themePicker.appendChild(newOption)
-
-    const shiftAmount = (window.innerHeight - 60) / 2
+    const shiftAmount = (newOption.getBoundingClientRect().height + 16)
     gsap.to(this.themePicker, {
       y: `-=${shiftAmount}`,
       duration: 0.5,
