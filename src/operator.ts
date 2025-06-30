@@ -14,6 +14,24 @@ export class Operator {
       duration: 1,
       ease: "out"
     })
+
+    /*
+
+    need to add this html structure to body
+    
+    <main class="editor">
+      <div class="operator">
+        <div class="operator-input closed">
+          <div class="op-label">
+            <img src="/ui/operator.svg" width="17px">
+            Operator
+          </div>
+        </div>
+      </div>
+    </main>
+
+    */
+
   }
 
 }
