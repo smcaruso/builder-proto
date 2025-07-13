@@ -630,3 +630,12 @@ main.share-your-vision .theme-confirm .message-header span.big-title {
 .editor .operator .operator-input:hover .op-label {
   filter: brightness(2);
 }
+
+#cat-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
