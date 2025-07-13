@@ -13,11 +13,19 @@ const _getRot = (pointer: { x: number; y: number }) => [
   0,
 ];
 
+// Note: Original theme based on recent Napster Music projects
+// const themeColors = {
+//   primary: new THREE.Color("#00FFFF"),
+//   secondary: new THREE.Color("#FF04FF"),
+//   tertiary: new THREE.Color("#F6911D"),
+//   quaternary: new THREE.Color("#58FF69"),
+// };
+
 const themeColors = {
-  primary: new THREE.Color("#00FFFF"),
-  secondary: new THREE.Color("#FF04FF"),
-  tertiary: new THREE.Color("#F6911D"),
-  quaternary: new THREE.Color("#58FF69"),
+  primary: new THREE.Color("rgb(255, 171, 221)"),
+  secondary: new THREE.Color("rgb(123, 171, 221)"),
+  tertiary: new THREE.Color("#fff"),
+  quaternary: new THREE.Color("#fff"),
 };
 
 const AnimatedCatModel: React.FC<{
@@ -84,7 +92,7 @@ const CatScene: React.FC = () => {
   return (
     <Canvas gl={{ toneMapping: THREE.NoToneMapping }}>
       {/* Lights */}
-      {/* <ambientLight intensity={1} /> */}
+      <ambientLight intensity={10} color={'#fff'} />
       {/* Top */}
       <pointLight
         position={[0, 4, 2]}
